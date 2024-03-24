@@ -1,10 +1,17 @@
 import { DataSource } from "typeorm";
-
-export const connectDB = new DataSource({
+const connectDB = new DataSource({
         type: "postgres",
-        host: "localhost",
-        port: 9999,
-        username: "",
-        password: "",
-        database: "rentx"    
+        host: "database",
+        port: 5432,
+        username: "user",
+        password: "pass",
+        database: "user_db"    
 });
+
+connectDB.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err)
+    })

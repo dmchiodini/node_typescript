@@ -1,6 +1,18 @@
-version: "2.24.6-desktop.1"
+version: "3"
 
 services:
+  database:
+    image: postgres
+    container_name: database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=user_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    volumes:
+      - pgdata:/data/postgres
   app:
     build: .
     container_name: node_typescript
@@ -8,4 +20,9 @@ services:
       - 3333:3333
     volumes:
       - .:/usr/app
+    depends_on:
+      - database
 
+volumes:
+  pgdata:
+    driver: local
